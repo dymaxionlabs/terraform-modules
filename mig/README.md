@@ -3,6 +3,14 @@
 This module is used to create a [google_compute_region_instance_group_manager](https://www.terraform.io/docs/providers/google/r/compute_region_instance_group_manager),
 and optionally, an autoscaler and healthchecks.
 
+## About this fork
+
+This is a fork of the original [mig](https://registry.terraform.io/modules/terraform-google-modules/vm/google/latest/submodules/mig) submodule from Google, but has some modifications:
+
+### New inputs
+
+* `all_instances_metadata`: Metadata, provided as a map, that is applied to all instances in the group.
+
 ## Usage
 
 See the [simple example](../../examples/mig/simple) for a usage example.
