@@ -9,7 +9,11 @@ This is a fork of the original [mig](https://registry.terraform.io/modules/terra
 
 ### New inputs
 
-* `all_instances_metadata`: Metadata, provided as a map, that is applied to all instances in the group.
+* `metadata`: Metadata, provided as a map, that is applied to all instances in the group.
+
+### Changes
+
+* `all_instances_config` is ignored by Terraform (with a lifecycle rule)
 
 ## Usage
 
@@ -41,7 +45,7 @@ The current version is 2.X. The following guides are available to assist with up
 | hostname | Hostname prefix for instances | `string` | `"default"` | no |
 | instance\_template | Instance template self\_link used to create compute instances | `string` | n/a | yes |
 | labels | Labels, provided as a map | `map(string)` | `{}` | no |
-| all_instances_metadata | Metadata, provided as a map, that is applied to all instances in the group. | `map(string)` | `{}` | no |
+| metadata | Metadata, provided as a map, that is applied to all instances in the group. | `map(string)` | `{}` | no |
 | max\_replicas | The maximum number of instances that the autoscaler can scale up to. This is required when creating or updating an autoscaler. The maximum number of replicas should not be lower than minimal number of replicas. | `number` | `10` | no |
 | mig\_name | Managed instance group name. When variable is empty, name will be derived from var.hostname. | `string` | `""` | no |
 | mig\_timeouts | Times for creation, deleting and updating the MIG resources. Can be helpful when using wait\_for\_instances to allow a longer VM startup time. | <pre>object({<br>    create = string<br>    update = string<br>    delete = string<br>  })</pre> | <pre>{<br>  "create": "5m",<br>  "delete": "15m",<br>  "update": "5m"<br>}</pre> | no |
@@ -56,6 +60,7 @@ The current version is 2.X. The following guides are available to assist with up
 | target\_size | The target number of running instances for this managed instance group. This value should always be explicitly set unless this resource is attached to an autoscaler, in which case it should never be set. | `number` | `1` | no |
 | update\_policy | The rolling update policy. https://www.terraform.io/docs/providers/google/r/compute_region_instance_group_manager#rolling_update_policy | <pre>list(object({<br>    max_surge_fixed                = number<br>    instance_redistribution_type   = string<br>    max_surge_percent              = number<br>    max_unavailable_fixed          = number<br>    max_unavailable_percent        = number<br>    min_ready_sec                  = number<br>    replacement_method             = string<br>    minimal_action                 = string<br>    type                           = string<br>    most_disruptive_allowed_action = string<br>  }))</pre> | `[]` | no |
 | wait\_for\_instances | Whether to wait for all instances to be created/updated before returning. Note that if this is set to true and the operation does not succeed, Terraform will continue trying until it times out. | `string` | `"false"` | no |
+| ignore_changes | List of attributes that should be ignored when changes are detected. | `list(string)` | `[]` | no |
 
 ## Outputs
 
