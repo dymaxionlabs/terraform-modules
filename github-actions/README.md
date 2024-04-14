@@ -16,7 +16,7 @@ was also used as a reference.
 
 ```hcl
 module "github-actions" {
-  source = "github.com/dymaxionlabs/terraform-modules//mig"
+  source = "github.com/dymaxionlabs/terraform-modules//github-actions"
 
   project      = var.project_id
   repositories = [
