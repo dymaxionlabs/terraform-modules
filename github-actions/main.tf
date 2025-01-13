@@ -38,3 +38,27 @@ resource "google_project_iam_member" "default" {
   role    = each.value
   member  = "serviceAccount:${google_service_account.default.email}"
 }
+
+resource "github_actions_variable" "project_id" {
+  for_each = toset(var.repositories)
+
+  repository    = each.value
+  variable_name = "GCP_PROJECT_ID"
+  value         = var.project
+}
+
+resource "github_actions_variable" "workload_identity_provider" {
+  for_each = toset(var.repositories)
+
+  repository    = each.value
+  variable_name = "GCP_WORKLOAD_IDENTITY_PROVIDER"
+  value         = google_iam_workload_identity_pool_provider.default.name
+}
+
+resource "github_actions_variable" "service_account" {
+  for_each = toset(var.repositories)
+
+  repository    = each.value
+  variable_name = "GCP_SERVICE_ACCOUNT"
+  value         = google_service_account.default.email
+}

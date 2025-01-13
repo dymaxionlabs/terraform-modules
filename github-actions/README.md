@@ -34,8 +34,14 @@ In this example, the service account used will have the roles
 allows Github to pull/push to an artifact registry, and access secrets in the
 project.  Adjust the service account roles according to your needs.
 
-It is recommended to include the following outputs, as you will need them to set
-up as variables in the Github repository:
+The module automatically sets the following repository variables, to configure
+Github Actions correctly:
+
+* `GCP_PROJECT_ID`: The project ID
+* `GCP_SERVICE_ACCOUNT`: The email of the service account created
+* `GCP_WORKLOAD_IDENTITY_PROVIDER`: The ID of the workload identity provider
+
+You can also these as outputs, in case you need them for other purposes:
 
 ```hcl
 output "github_actions_workload_provider" {
@@ -47,4 +53,18 @@ output "github_actions_service_account" {
   description = "The email of the GitHub Actions service account"
   value       = module.github_actions.service_account
 }
+```
+
+### Example on Github Actions
+
+Use this step at the beginning of your GitHub Actions workflow to authenticate with Google Cloud:
+
+```yaml
+- id: auth
+  name: Authenticate with Google Cloud
+  uses: google-github-actions/auth@v2
+  with:
+    token_format: access_token
+    workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+    service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
 ```
