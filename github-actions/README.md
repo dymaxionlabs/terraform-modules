@@ -19,6 +19,7 @@ module "github_actions" {
   source = "github.com/dymaxionlabs/terraform-modules//github-actions"
 
   project      = var.project_id
+  owner        = var.github_organization
   repositories = [
     "dymaxionlabs/optimus-app"
   ]
