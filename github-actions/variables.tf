@@ -3,6 +3,11 @@ variable "project" {
   type        = string
 }
 
+variable "owner" {
+  description = "The owner of the GitHub repositories"
+  type        = string
+}
+
 variable "repositories" {
   description = "A list of GitHub repositories to grant access to the GitHub Actions service account"
   type        = list(string)

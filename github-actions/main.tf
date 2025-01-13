@@ -1,3 +1,7 @@
+provider "github" {
+  owner = var.owner
+}
+
 resource "google_iam_workload_identity_pool" "default" {
   project                   = var.project
   workload_identity_pool_id = "github"
