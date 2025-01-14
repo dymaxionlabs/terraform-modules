@@ -35,7 +35,7 @@ resource "google_service_account_iam_member" "default" {
 
   service_account_id = google_service_account.default.name
   role               = "roles/iam.workloadIdentityUser"
-  member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.default.name}/attribute.repository/${each.value}"
+  member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.default.name}/attribute.repository/${var.owner}/${each.value}"
 }
 
 resource "google_project_iam_member" "default" {
