@@ -18,14 +18,12 @@
 
 variable "project_id" {
   type        = string
-  description = "The GCP project ID"
-  default     = null
+  description = "The Google Cloud project ID"
 }
 
-variable "hostname" {
-  description = "Hostname prefix for instances"
+variable "region" {
+  description = "The Google Cloud region where the managed instance group resides."
   type        = string
-  default     = "default"
 }
 
 variable "mig_name" {
@@ -34,20 +32,21 @@ variable "mig_name" {
   default     = ""
 }
 
-variable "region" {
-  description = "The GCP region where the managed instance group resides."
+variable "hostname" {
+  description = "Hostname prefix for instances"
   type        = string
-}
-
-variable "instance_template" {
-  description = "Instance template self_link used to create compute instances"
-  type        = string
+  default     = "default"
 }
 
 variable "target_size" {
   description = "The target number of running instances for this managed instance group. This value should always be explicitly set unless this resource is attached to an autoscaler, in which case it should never be set."
   type        = number
   default     = 1
+}
+
+variable "instance_template" {
+  description = "Instance template self_link used to create compute instances"
+  type        = string
 }
 
 variable "target_pools" {
@@ -100,16 +99,16 @@ variable "stateful_ips" {
 variable "update_policy" {
   description = "The rolling update policy. https://www.terraform.io/docs/providers/google/r/compute_region_instance_group_manager#rolling_update_policy"
   type = list(object({
-    max_surge_fixed                = number
-    instance_redistribution_type   = string
-    max_surge_percent              = number
-    max_unavailable_fixed          = number
-    max_unavailable_percent        = number
-    min_ready_sec                  = number
-    replacement_method             = string
+    max_surge_fixed                = optional(number)
+    instance_redistribution_type   = optional(string)
+    max_surge_percent              = optional(number)
+    max_unavailable_fixed          = optional(number)
+    max_unavailable_percent        = optional(number)
+    min_ready_sec                  = optional(number)
+    replacement_method             = optional(string)
     minimal_action                 = string
     type                           = string
-    most_disruptive_allowed_action = string
+    most_disruptive_allowed_action = optional(string)
   }))
   default = []
 }
